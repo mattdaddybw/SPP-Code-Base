@@ -23,4 +23,4 @@ This is the codebase that builds the School Progress Project static website.
 - [ ] Add circle and triangle traces
 - [ ] Make input elements active during tour
 - [ ] Style top input section
-- [ ] Push repo to GitHub
+- [x] Push repo to GitHub
