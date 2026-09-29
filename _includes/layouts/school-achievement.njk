@@ -1,0 +1,100 @@
+---
+layout: layouts/base.njk
+---
+<div id="input-container">
+
+  <label>
+    District Categories
+    <select id="categories">
+      <option selected>All districts</option>
+      <option>Districts with 1-3 elementary schools</option>
+      <option>Districts with 4 or more elementary schools</option>
+      <option>Top 10% only</option>
+      <option>Highlight MESPA award schools</option>
+    </select>
+  </label>
+
+  <label>
+    Find My District
+    <select id="district">
+      <option>--</option>
+    </select>
+  </label>
+
+  <label>
+    Only Show District
+    <input type="checkbox">
+  </label>
+
+  <button id="clear">Clear selections</button>
+
+  <div id="mode-selector">
+
+    <label>
+      Guided Story
+      <input type="radio" name="mode" value="guided" checked>
+    </label>
+
+    <label>
+      Explore Yourself
+      <input type="radio" name="mode" value="explore">
+    </label>
+
+  </div>
+</div>
+
+<div id="content-container">
+
+  <aside id="guide-panel">
+
+    <h2 id="guide-title"></h2>
+
+    <div id="guide-text"></div>
+
+    <div id="guide-controls">
+
+      <button id="previous-step">
+        Previous
+      </button>
+
+      <span id="step-indicator">
+      </span>
+
+      <button id="next-step">
+        Next
+      </button>
+
+    </div>
+
+  </aside>
+
+  <div id="plot-container">
+
+    <div id="plot"></div>
+    <div id="legend">
+      <div>
+        <h3>Performance</h3>
+        <ul class="left">
+          <li class="blue">Top 10%</li>
+          <li class="green">Top 11-20%</li>
+          <li class="yellow">Middle 60%</li>
+          <li class="orange">Bottom 11-20%</li>
+          <li class="pink">Bottom 10%</li>
+        </ul>
+      </div>
+      <div>
+        <h3>District Size</h3>
+        <ul class="right">
+          <li class="circle">1-3 elementary schools</li>
+          <li class="triangle">4+ elementary schools</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="/website_0059aafc/assets/js/plotly-3.1.0.min.js"></script>
+<script src="/website_0059aafc/assets/js/guide.js"></script>
+<script src="/website_0059aafc/assets/js/app.js"></script>
