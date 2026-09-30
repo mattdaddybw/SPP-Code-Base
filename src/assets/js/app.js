@@ -17,7 +17,7 @@ function getDefaultFilters() {
         category: "All districts",
         district: "--",
         highlight: "all",
-        showOnly: false,
+        showOnlyDistrict: false,
         regression: false,
         shapes: []
     };
@@ -150,10 +150,12 @@ function updateMode() {
 function applyFilters(filters) {
 
     app.filters = {
-        ...getDefaultFilters(),
+        // ...getDefaultFilters(),
+        ...app.filters,
         ...structuredClone(filters)
     };
 
+    updateDistrictDropdown();
     syncControls();
     updatePlot();
 }
@@ -188,13 +190,16 @@ function updateStepIndicator() {
 
 function getPlotData() {
 
+    console.log("Plot filters:", app.filters);
+
     const categoryData = getCategoryData();
 
+    const category = app.filters.category;
     const district = app.filters.district;
     const showOnly = app.filters.showOnlyDistrict;
     const highlight = app.filters.highlight;
 
-    if (highlight === "all") {
+    if (district === "--") {
 
         return {
             background: [],
@@ -203,18 +208,18 @@ function getPlotData() {
 
     }
 
-    if (
-        highlight === "none" ||
-        district === "All districts" ||
-        district === "--"
-    ) {
+    // if (
+    //     highlight === "none" ||
+    //     category === "All districts" ||
+    //     district === "--"
+    // ) {
 
-        return {
-            background: categoryData,
-            highlighted: []
-        };
+    //     return {
+    //         background: categoryData,
+    //         highlighted: []
+    //     };
 
-    }
+    // }
 
     const highlighted =
         categoryData.filter(d =>
@@ -456,10 +461,15 @@ function addTrace(
         marker: {
 
             color: options.color,
-
             opacity: options.opacity,
-
-            size: options.size
+            size: data.map(d =>
+                d.n_elem_schools_in_district <= 3 ? 10 : 13
+            ),
+            symbol: data.map(d =>
+                d.n_elem_schools_in_district <= 3
+                    ? "circle"
+                    : "triangle-up"
+            )
 
         },
 
@@ -646,13 +656,9 @@ function getCategoryData() {
 function syncControls() {
 
     categorySelect.value = app.filters.category;
-
-    updateDistrictDropdown();
-
     districtSelect.value = app.filters.district;
-
-    showOnlyCheckbox.checked =
-        app.filters.showOnlyDistrict;
+    showOnlyCheckbox.checked = app.filters.showOnlyDistrict;
+    
 }
 
 function updateDistrictDropdown() {
@@ -744,35 +750,38 @@ modeButtons.forEach(button => {
         }
     );
 
-});
+}); 
 
 categorySelect.addEventListener(
     "change",
     () => {
-
-        app.filters.category =
-            categorySelect.value;
-        updateDistrictDropdown();
-        updatePlot();
-
+        applyFilters({
+            category: categorySelect.value,
+            district: "--"
+        });
     }
 );
 
 districtSelect.addEventListener(
     'change',
     () => {
-        app.filters.district =
-            districtSelect.value;
-            updatePlot()
+        // app.filters.district =
+        //     districtSelect.value;
+        applyFilters({
+            district: districtSelect.value
+        });
     }
 );
 
 showOnlyCheckbox.addEventListener(
     'change',
     () => {
-        app.filters.showOnlyDistrict =
-            showOnlyCheckbox.checked;
-            updatePlot()
+        // app.filters.showOnlyDistrict =
+        //     showOnlyCheckbox.checked;
+        applyFilters({
+            showOnlyDistrict: showOnlyCheckbox.checked
+        });
+        // updatePlot()
     }
 );
 
@@ -780,13 +789,18 @@ clearButton.addEventListener(
     'click',
     () => {
 
-        districtSelect.value =
-            '--';
+        // districtSelect.value =
+        //     '--';
 
-        showOnlyCheckbox.checked =
-            false;
+        // showOnlyCheckbox.checked =
+        //     false;
+        applyFilters({
+            category: "All districts",
+            district: "--",
+            showOnlyDistrict: false
+        });
 
-        updatePlot();
+        // updatePlot();
     }
 );
 

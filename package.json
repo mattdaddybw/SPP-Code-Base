@@ -1,0 +1,26 @@
+{
+  "name": "school",
+  "version": "1.0.0",
+  "description": "This is the codebase that builds the School Progress Project static website.",
+  "main": "eleventy.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx @11ty/eleventy",
+    "start": "npx @11ty/eleventy --serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mattdaddybw/SPP-Code-Base.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/mattdaddybw/SPP-Code-Base/issues"
+  },
+  "homepage": "https://github.com/mattdaddybw/SPP-Code-Base#readme",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.6"
+  }
+}
