@@ -28,6 +28,6 @@ module.exports = function (eleventyConfig) {
       output: "_site"
     },
     // Injects the Bluehost subfolder path prefix automatically
-    pathPrefix: "website_0059aafc" 
+    // pathPrefix: "website_0059aafc" 
   };
 };
