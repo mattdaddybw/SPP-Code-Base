@@ -23,11 +23,8 @@ function getDefaultFilters() {
     };
 }
 
-const modeButtons =
-    document.querySelectorAll(
-        'input[name="mode"]'
-    );
-
+const modeButton = document.getElementById('mode-toggle');
+let mode = "guided";
 const districtSelect = document.getElementById('district');
 const categorySelect = document.getElementById('categories');
 const showOnlyCheckbox = document.querySelector('input[type="checkbox"]');
@@ -110,7 +107,11 @@ const layout = {
     },
     showlegend: false,
     shapes: [],
-    annotations: []
+    annotations: [],
+    autosize: true,
+    margin: {
+        r: 0
+    }
 };
 
 async function loadData() {
@@ -118,13 +119,19 @@ async function loadData() {
     app.data = await response.json();
 
     init();
+
+    // requestAnimationFrame(() => {
+    //     requestAnimationFrame(() => {
+    //         init();
+    //     });
+    // });
 }
 
 function init() {
 
-    document.querySelector(
-        `input[name="mode"][value="${app.mode}"]`
-    ).checked = true;
+    // document.querySelector(
+    //     `input[name="mode"][value="${app.mode}"]`
+    // ).checked = true;
     updateMode();
 
     categorySelect.selectedIndex = 0;
@@ -134,7 +141,7 @@ function init() {
 }
 
 function updateMode() {
-    if (app.mode === "guided") {
+    if (mode === "guided") {
         document.body.classList.remove(
             "explore-mode"
         );
@@ -144,6 +151,7 @@ function updateMode() {
         document.body.classList.add(
             "explore-mode"
         );
+        Plotly.Plots.resize(document.querySelector("#plot"));
     }
 }
 
@@ -170,7 +178,12 @@ function showGuideStep(index) {
 
     app.guide.currentHoverSchools = step.hoverSchools ?? [];
 
-    applyFilters(step.filters);
+    // applyFilters(step.filters);
+    applyFilters({
+        ...step.filters,
+        shapes: step.filters.shapes ?? [],
+        regression: step.filters.regression ?? false
+    });
 
     document.querySelector("#guide-title")
         .textContent = step.title;
@@ -278,26 +291,6 @@ function updatePlot() {
         'Minnesota Elementary Schools: Reading Proficiency vs Poverty<br>' +
         `<span style="font-size:16px;color:#666;">${getPlotTitle()}</span>`}
 
-    // if (plotData.background.length > 0) {
-
-    //     addTrace(
-    //         traces,
-    //         plotData.background,
-    //         {
-
-    //             color: colors.grey,
-
-    //             opacity: 0.50,
-
-    //             size: 8,
-
-    //             name: "Other districts"
-
-    //         }
-    //     );
-
-    // }
-
     addBackgroundTrace(
         traces,
         plotData.background
@@ -307,34 +300,6 @@ function updatePlot() {
         traces,
         plotData.highlighted
     );
-
-    // for (const group of RESIDUAL_GROUPS) {
-
-    //     const schools =
-    //         plotData.highlighted.filter(
-    //             d => d.resid_group === group.name
-    //         );
-
-    //     if (schools.length === 0)
-    //         continue;
-
-    //     addTrace(
-    //         traces,
-    //         schools,
-    //         {
-
-    //             color: group.color,
-
-    //             opacity: 0.80,
-
-    //             size: 10,
-
-    //             name: group.name
-
-    //         }
-    //     );
-
-    // }
 
     if (app.filters.regression) {
         addRegressionTrace(
@@ -348,10 +313,11 @@ function updatePlot() {
     Plotly.react(
         'plot',
         traces,
-        layout
+        layout,
+        { responsive: true }
     ).then(() => {
-    showGuideHover(traces);
-});;
+        showGuideHover(traces);
+    });;
 }
 
 function makeHoverText(data) {
@@ -737,20 +703,24 @@ function getPlotTitle() {
 
 }
 
-modeButtons.forEach(button => {
+// window.addEventListener("resize", () => {
+//     console.log("Resize")
+//     Plotly.Plots.resize(
+//         document.getElementById("plot")
+//     );
+// });
 
-    button.addEventListener(
-        "change",
-        () => {
+modeButton.addEventListener("click", () => {
+    if (mode === "guided") {
+        mode = "explore";
+        modeButton.textContent = "Show Guided Story >";
+    } else {
+        mode = "guided";
+        modeButton.textContent = "< Hide Guided Story";
+    }
 
-            app.mode = button.value;
-
-            updateMode();
-
-        }
-    );
-
-}); 
+    updateMode();
+});
 
 categorySelect.addEventListener(
     "change",

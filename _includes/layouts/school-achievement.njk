@@ -2,43 +2,48 @@
 layout: layouts/base.njk
 ---
 <div id="input-container">
-
-  <label>
-    District Categories
-    <select id="categories">
-      <option selected>All districts</option>
-      <option>Districts with 1-3 elementary schools</option>
-      <option>Districts with 4 or more elementary schools</option>
-      <option>Top 10% only</option>
-      <option>Highlight MESPA award schools</option>
-    </select>
-  </label>
-
-  <label>
-    Find My District
-    <select id="district">
-      <option>--</option>
-    </select>
-  </label>
-
-  <label>
-    Only Show District
-    <input type="checkbox">
-  </label>
-
-  <button id="clear">Clear selections</button>
-
-  <div id="mode-selector">
+  <div id="input-controls">
+    <label>
+      District Categories
+      <select id="categories">
+        <option selected>All districts</option>
+        <option>Districts with 1-3 elementary schools</option>
+        <option>Districts with 4 or more elementary schools</option>
+        <option>Top 10% only</option>
+        <option>Highlight MESPA award schools</option>
+      </select>
+    </label>
 
     <label>
-      Guided Story
+      Find District
+      <select id="district">
+        <option>--</option>
+      </select>
+    </label>
+    <label>
+      <div>
+        <input type="checkbox">
+        Only Show District
+      </div>
+      <button id="clear">Clear Selections</button>
+    </label>
+
+  </div>
+  <div id="mode-selector">
+
+    <button id="mode-toggle" type="button">
+        &lt; Hide Guided Story
+    </button>
+
+    <!-- <label>
+      Hide Guided Story
       <input type="radio" name="mode" value="guided" checked>
     </label>
 
     <label>
       Explore Yourself
       <input type="radio" name="mode" value="explore">
-    </label>
+    </label> -->
 
   </div>
 </div>

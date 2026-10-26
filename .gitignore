@@ -1,4 +1,5 @@
 _site/
-.DS_Store
 data/
+node_modules/
 .htaccess
+.DS_Store
