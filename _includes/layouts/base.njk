@@ -22,10 +22,6 @@
         <img src="{{ '/assets//images/spp_logo.png' | url }}" alt="School Progress Project logo">
       </a>
 
-      <button class="nav-toggle" aria-label="Toggle navigation menu">
-        <span class="hamburger"></span>
-      </button>
-
       <div class="site-branding-text">
         <div class="site-title">
           <a href="{{ '/' | url }}">
@@ -40,10 +36,6 @@
     </div>
 
     <nav>
-      <button class="nav-toggle" aria-label="Toggle navigation menu">
-        <span class="hamburger"></span>
-      </button>
-
       <div class="nav-links">
         <a href="{{ '/' | url }}" class="{% if page.url == '/' %}active{% endif %}">
           Home
@@ -61,6 +53,9 @@
           About
         </a>
       </div>
+      <button class="nav-toggle" aria-label="Toggle navigation menu">
+        <span class="hamburger"></span>
+      </button>
     </nav>
   </header>
 

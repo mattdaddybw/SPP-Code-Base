@@ -15,6 +15,11 @@ body {
     font-family: "Plus Jakarta Sans";
     color: var(--dark);
 }
+
+body.body-menu-open {
+    overflow: hidden;
+}
+
 #input-container {
     display: flex;
     flex-direction: column;
@@ -306,7 +311,7 @@ nav {
 nav .nav-links {
     display: flex;
     align-items: center;
-    transition: none;
+    /* transition: none; */
     /* background-color: var(--gold); */
     border-radius: 25px;
     gap: 10px;
@@ -469,4 +474,109 @@ body.home-layout {
 
 #slider-cursor svg {
     transition: transform 0.3s ease;
+}
+
+@media (max-width: 800px) {
+    /* .design-column-1 {
+        grid-column: 1 / 14;
+    } */
+
+    .nav-toggle {
+        position: relative;
+        display: block;
+        margin: auto 0 auto auto;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 12px 0 12px 12px;
+        z-index: 3000;
+        /* Keeps it on top of the menu when opened */
+    }
+
+    .hamburger {
+        display: block;
+        position: relative;
+        width: 24px;
+        height: 2px;
+        background: var(--dark);
+        transition: background 0.2s ease;
+    }
+
+    .hamburger::before,
+    .hamburger::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        width: 24px;
+        height: 2px;
+        background: var(--dark);
+        transition: transform 0.3s ease, top 0.3s ease;
+    }
+
+    .hamburger::before {
+        top: -8px;
+    }
+
+    .hamburger::after {
+        top: 8px;
+    }
+
+    nav .nav-links {
+        position: fixed;        
+        inset: 0;
+        width: 100%;
+        height: 100dvh;
+        z-index: 2500;
+        
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        
+        background-color: var(--gold);
+        border-radius: 0;
+
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        /* transition: opacity 0.3s ease, visibility 0.3s; */
+    }
+
+    nav .nav-links a {
+        font-size: 22px;
+        /* padding: 12px 24px 12px 50px; */
+    }
+
+    nav .nav-links a:nth-child(1),
+    nav .nav-links a:last-child {
+        /* padding-left: 50px; */
+        padding-right: 24px;
+        font-size: 22px;
+    }
+
+    nav.menu-open .nav-links {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    nav.menu-animated .nav-links {
+        transition:
+            opacity 0.3s ease,
+            visibility 0.3s;
+    }
+
+    /* Morph the hamburger icon into an 'X' close button */
+    nav.menu-open .hamburger {
+        background: transparent;
+    }
+
+    nav.menu-open .hamburger::before {
+        top: 0;
+        transform: rotate(45deg);
+    }
+
+    nav.menu-open .hamburger::after {
+        top: 0;
+        transform: rotate(-45deg);
+    }
 }
